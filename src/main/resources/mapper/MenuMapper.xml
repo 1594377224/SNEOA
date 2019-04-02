@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mvtech.mapper.MenuMapper">
+	<select id="findMenuList"  parameterType="Map" resultType = "Map">
+		select id,name,price,remark,imgUrl,imgName
+		from menu 
+		<where>
+			isDel = 0
+		</where>
+	</select>
+	
+	<update id = "" parameterType = "Map">
+		update menu
+		<set>
+			userId = #{userId},
+			name = #{name},
+			phone = #{phone},
+			address = #{address},
+			updateTime = now()
+		</set>
+		where id = #{id}
+	</update>
+	
+	<insert id = "addMenu" parameterType="Map">
+		INSERT INTO menu (
+			name,price,remark,imgUrl,
+			imgName,isDel,crateTime,updateTime
+		)
+		VALUES
+			(#{name},#{price},#{remark},#{imgUrl},
+			#{imgName},0,now(),now())
+	</insert>
+	
+	<update id="delMenu" >
+		update menu
+		<set>
+			isDel = 1,
+			updateTime = now()
+		</set>
+		where id = #{id}
+	</update>
+	
+</mapper>

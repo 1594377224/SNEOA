@@ -1,10 +1,19 @@
 package cn.mvtech.service;
 
 import java.util.List;
-
-import cn.mvtech.beans.User;
+import java.util.Map;
 
 public interface UserService {
-	//查询所有的用户
-		public List<User> findAll();
+
+	Map<String, Object> findUserList(String id);
+
+	int upUserById(Map<String, Object> paramMap);
+
+	int updUserPwd(Map<String, Object> paramMap);
+
+	int addUser(Map<String, Object> paramMap);
+
+	int findUserByUserName(String addUserName);
+
+	List<Map<String, Object>> findAllUserList();
 }

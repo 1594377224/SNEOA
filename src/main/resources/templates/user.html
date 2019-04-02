@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+   <title>系统后台</title>
+    
+
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+	<script src="/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/static/bootstrap/js/bootstrap.js"></script>
+   
+
+    <!-- Demo page code -->
+
+    <style type="text/css">
+        #line-chart {
+            height:300px;
+            width:800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+        .brand { font-family: georgia, serif; }
+        .brand .first {
+            color: #ccc;
+            font-style: italic;
+        }
+        .brand .second {
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+	<div class="navbar">
+        <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    
+                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+                    <li id="fat-menu" class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                       	    <span th:text="${uesrMap.name}"></span>
+                           <!--  <i class="icon-user"></i>AAA
+                            <i class="icon-caret-down"></i> -->
+                        </a>
+
+                        <ul class="dropdown-menu">
+                        	<li>
+		                        <form id="user" action="/zx/findUserList" method="post">       
+		                         	<button> <a>个人中心</a></button>
+						            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+						        </form>
+                            </li>
+                            <!-- <li class="divider"></li> -->
+                            <li><a tabindex="-1" href="/zx/index"> 退出</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+                <a class="brand" href="#"><span class="first">无线</span> <span class="second">后台</span></a>
+        </div>
+    </div>	 
+	
+	<div class="sidebar-nav">
+        <form class="search form-inline">
+            <input type="text" placeholder="Search...">
+        </form>
+
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>首页</a>
+	        <ul id="dashboard-menu" class="nav nav-list collapse in">
+	            <li>
+	            	<form id="user" action="/zx/findUserList" method="post">       
+                    	<button> <a>个人中心</a></button>
+			            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			        </form>
+				</li>
+	        </ul>
+
+        <a href="#table-menu" class="nav-header" data-toggle="collapse"><i class="icon-table"></i>餐桌</a>
+	        <ul id="table-menu" class="nav nav-list collapse">
+	            <li ><a href="/WirelessOrder/table.do?flag=table">餐桌管理</a></li>
+	        </ul>
+
+        <a href="#menu-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-reorder"></i>菜谱</a>
+	        <ul id="menu-menu" class="nav nav-list collapse">
+	         <li>
+	            <form id="menu" action="/zx/findMenuList" method="post">       
+	                		<button> <a>菜谱管理</a></button>
+			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
+			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+				</form>
+			 </li>
+	        </ul>
+
+        <a href="#order-menu" class="nav-header" data-toggle="collapse"><i class="icon-th-large"></i>订单</a>
+	        <ul id="order-menu" class="nav nav-list collapse">
+	            <li ><a href="/WirelessOrder/order.do?flag=order">订单管理</a></li>
+	        </ul>
+    </div>
+    
+    
+   <!-- 内容 开始 -->
+   <div class="content">
+        <div class="header">
+            <h1 class="page-title">个人中心</h1>
+        </div>
+        
+        <ul class="breadcrumb">
+            <li> <span class="divider">/</span>
+	            <form id="user" action="/zx/indexUser" method="post">       
+                     <button> 主页</button>
+		            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+		            <input hidden="test" name="name"  th:value="${uesrMap.name}" >
+				</form>
+			</li>
+            <li class="active">
+            	<form id="user" action="/zx/findUserList" method="post">       
+                     <button> 个人中心</button>
+		            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+				</form>
+            </li>
+        </ul>
+		<a th:if="${resultMap.resultCode =='-1'}" >
+      	 	<div class="alert alert-info">
+		        <button type="button" class="close" data-dismiss="alert">×</button>
+		        <strong>小提示：</strong> <span th:text="${resultMap.resultMsg}"></span>
+		    </div>
+   		</a>
+   		
+        <div class="container-fluid">
+            <div class="row-fluid">
+           			
+			    <form id="tab" action="/zx/upUserById" method="post">               
+					<div class="btn-toolbar">
+		    			<button class="btn btn-primary" type="submit"><i class="icon-save"></i> 保存</button>
+					</div>
+					<div class="well">
+					    <ul class="nav nav-tabs">
+					      <li class="active"><a href="#home" data-toggle="tab">基本资料</a></li>
+					      <li><a href="#profile" data-toggle="tab">密码更改</a></li>
+					      <li th:if="${uesrMap.state == 0}">
+					      	<a href="#userAdd" data-toggle="tab">新增用户</a>
+					      </li>
+					      <li th:if="${uesrMap.state == 0}">
+					      	<a href="#userList" data-toggle="tab">用户列表</a>
+					      </li>
+					    </ul>
+					</div>
+					<a th:if="${resultMap.resultCode =='2'}" >
+			  	  	<div id="myTabContent" class="tab-content">
+				      	<div class="tab-pane active in" id="home">
+				      		<input type="hidden" name="id" th:value="${uesrMap.id}">
+					        <label>用户id</label>
+					        <input name="userId" type="text" th:value="${uesrMap.userId}" >
+					        <label>用户名</label>
+					        <input name="name"  type="text" th:value="${uesrMap.name}" >
+					        <label>手机号</label>
+					        <input name="phone"  type="text" th:value="${uesrMap.phone}" >
+					        <label>地址</label>
+					        <input name="address"  type="text" th:value="${uesrMap.address}" >
+			        	</div>
+  					</div>
+  					</a>
+		   		 </form>
+		     </div>
+		     <div class="tab-pane fade" id="profile">
+		     <a th:if="${resultMap.resultCode =='2'}" >
+				    <form id="tab2" action="/zx/updUserPwd" method="post">
+				    	<input type="hidden" name="id" th:value="${uesrMap.id}">
+				        <label>新密码</label>
+				        <input name="password" type="password" >
+				        <div>
+				            <button class="btn btn-primary" type="submit">更改</button>
+				        </div>
+				    </form>
+			</a>
+			<footer>
+		             <hr>
+		             <p class="pull-right">&copy; 2013.8 <a href="#" > shun_fzll</a></p>
+		    </footer>
+        	</div>
+        	
+        	 <div class="tab-pane fade" id="userAdd">
+        		 <form id="tab2" action="/zx/addUser" method="post">
+				    	<input id="id" type="hidden"  name="id"  th:value="${uesrMap.id}">
+						<input id="name" type="hidden"  name="name"  th:value="${uesrMap.name}" >
+						<div class="control-group">
+							<label class="control-label" for="price">用户名(中文)*</label>
+							<div class="controls">
+							<input name="addUserName" class="input-xlarge focused" id="addUserName" type="text" value="">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="price">用户名(英文)*</label>
+							<div class="controls">
+							<input name="addUserId" class="input-xlarge focused" id="addUserId" type="text" value="">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="price">密码*</label>
+							<div class="controls">
+							<input name="addPassword" class="input-xlarge focused" id="addPassword" type="password" value="">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="price">手机号*</label>
+							<div class="controls">
+							<input name="addPhone" class="input-xlarge focused" id="addPhone" type="text" value="">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="price">地址*</label>
+							<div class="controls">
+							<input name="addAddress" class="input-xlarge focused" id="addAddress" type="text" value="">
+							</div>
+						</div>
+						
+						<div>
+				            <button class="btn btn-primary" type="submit">新增用户</button>
+				        </div>
+				 </form>
+				 <footer>
+		             <hr>
+		             <p class="pull-right">&copy; 2013.8 <a href="#" > 管理员操作</a></p>
+		     	 </footer>
+        	 </div>
+        	 <a th:if="${uesrMap.state == 0}">
+        	 <a th:if="${resultMap.resultCode =='2'}" >
+	        	 <div class="tab-pane fade" id="userList">
+	        		 <div class="container">
+						<div class="row">
+							<div class="col-md-6">
+								<table class="table table-bordered">
+									<thead>
+										<th>用户名(英文)</th>
+										<th>用户名(中文)</th>
+										<th>密码</th>
+										<th>手机号</th>
+										<th>地址</th>
+										<th>管理员</th>
+										<th>创建时间</th>
+										<th>更新时间</th>
+									</thead>
+									<tbody>
+										<tr th:each="user,userStat : ${userList}">
+													<td th:text="${user.userId}">用户名(英文)</td>
+													<td th:text="${user.name}">用户名(中文)</td>
+													<td th:text="${user.password}">密码</td>
+													<td th:text="${user.phone}">手机号</td>
+													<td th:text="${user.address}">地址</td>
+													<td th:text="${user.state}">理员</td>
+													<td th:text="${user.crateTime}">创建时间</td>
+													<td th:text="${user.updateTime}">更新时间</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+	        	 </div>
+	        	  <footer>
+		             <hr>
+		             <p class="pull-right">&copy; 2013.8 <a href="#" > 管理员操作</a></p>
+		     	 </footer>
+        	 </a>
+        	 </a>
+        	 
+    	</div>
+	</div>
+    <script type="text/javascript">
+        $("[rel=tooltip]").tooltip();
+        $(function() {
+            $('.demo-cancel-click').click(function(){return false;});
+        });
+    </script>
+    
+    
+    
+</body>
+</html>

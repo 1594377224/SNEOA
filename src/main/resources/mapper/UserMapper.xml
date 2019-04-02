@@ -1,7 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.mvtech.mapper.UserMapper">
-	<select id="findAll" resultType="user">
-		select * from user
+	<select id="findUserList"  parameterType="Map" resultType = "Map">
+		select id,userId,name,password,phone,address,state 
+		from user 
+		<where>
+			id = #{id}
+			AND isDel = 0
+		</where>
 	</select>
+	
+	<update id = "upUserById" parameterType = "Map">
+		update user
+		<set>
+			userId = #{userId},
+			name = #{name},
+			phone = #{phone},
+			address = #{address},
+			updateTime = now()
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id = "updUserPwd" parameterType = "Map">
+		update user
+		<set>
+			password = #{password},
+			updateTime = now()
+		</set>
+		where id = #{id}
+	</update>
+	
+	<insert id = "addUser" parameterType="Map">
+		INSERT INTO user (
+			userId,name,password,phone,
+			address,state,isDel,crateTime,updateTime
+		)
+		VALUES
+			(#{addUserId},#{addUserName},#{addPassword},#{addPhone},
+			#{addAddress},#{state},0,now(),now())
+	</insert>
+	
+	<select id="findUserByUserName" resultType = "int" >
+		select count(1)
+		from user 
+		<where>
+			name = #{addUserName}
+			AND isDel = 0
+		</where>
+	</select>
+	
+	
+	<select id="findAllUserList" parameterType="Map" resultType = "Map" >
+		select id,userId,name,password,phone,address,state,crateTime,updateTime
+		from user 
+		<where>
+			isDel = 0
+		</where>
+	</select>
+	
 </mapper>

@@ -1,0 +1,14 @@
+.file-box {
+    position: relative;
+    display: inline-block;
+    width:100px;
+    height:100px;
+    background:url('images/uploadPc.png')no-repeat;
+    background-size:100px 100px;
+}
+#input_file{
+    width:100%;
+    height:100%;
+    opacity: 0;
+    filter:alpha(opacity=0);
+}
