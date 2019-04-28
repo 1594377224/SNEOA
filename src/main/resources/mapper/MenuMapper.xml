@@ -39,5 +39,40 @@
 		</set>
 		where id = #{id}
 	</update>
+	<select id="findMenuMap"  parameterType="Map" resultType = "Map">
+		select id,name,price,remark,imgUrl,imgName
+		from menu 
+		<where>
+			id=#{id}
+			and isDel = 0
+		</where>
+	</select>
+	
+	<update id="updateMenu" >
+		update menu
+		<set>
+			name = #{name},
+			price = #{price},
+			remark = #{remark},
+			imgUrl = #{imgUrl},
+			imgName = #{imgName},
+			updateTime = now()
+		</set>
+		where id = #{menuId}
+	</update>
+	
+	
+	<update id="updateMenuById" >
+		update menu
+		<set>
+			name = #{name},
+			price = #{price},
+			remark = #{remark},
+			updateTime = now()
+		</set>
+		where id = #{menuId}
+	</update>
+	
+	
 	
 </mapper>

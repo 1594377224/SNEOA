@@ -80,16 +80,16 @@
 				</li>
 	        </ul>
 
-        <a href="#table-menu" class="nav-header" data-toggle="collapse"><i class="icon-table"></i>餐桌</a>
+        <!-- <a href="#table-menu" class="nav-header" data-toggle="collapse"><i class="icon-table"></i>主菜单</a>
 	        <ul id="table-menu" class="nav nav-list collapse">
-	            <li ><a href="/WirelessOrder/table.do?flag=table">餐桌管理</a></li>
-	        </ul>
+	            <li ><a href="/WirelessOrder/table.do?flag=table">主菜单管理</a></li>
+	        </ul> -->
 
-        <a href="#menu-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-reorder"></i>菜谱</a>
+        <a href="#menu-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-reorder"></i>商品</a>
 	        <ul id="menu-menu" class="nav nav-list collapse">
 	        <li>
 	           <form id="menu" action="/zx/findMenuList" method="post">       
-	                		<button> <a>菜谱管理</a></button>
+	                		<button> <a>商品管理</a></button>
 			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
 			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
 			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
@@ -99,7 +99,16 @@
 
         <a href="#order-menu" class="nav-header" data-toggle="collapse"><i class="icon-th-large"></i>订单</a>
 	        <ul id="order-menu" class="nav nav-list collapse">
-	            <li ><a href="/WirelessOrder/order.do?flag=order">订单管理</a></li>
+	            <li >
+		            <form id="order" action="/zx/findOrderList" method="post">       
+	                		<button> <a>订单管理</a></button>
+			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
+			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+			           		<input hidden="test" name="start"  th:value="0" >
+			           		<input hidden="test" name="limit"  th:value="8" >
+					</form>
+				</li>
 	        </ul>
     </div>
     
@@ -122,10 +131,10 @@
 						  </div>
 					</div>
 			        <div class="header">
-			            <h1 class="page-title">菜谱</h1>
+			            <h1 class="page-title">商品</h1>
 			        </div>
-        
-               		<ul class="breadcrumb">
+
+		<ul class="breadcrumb">
 			            <li>
 				            <form id="user" action="/zx/indexUser" method="post">       
 			                    <button> 主页</button>
@@ -133,7 +142,7 @@
 					            <input hidden="test" name="name"  th:value="${uesrMap.name}" >
 							</form>
 			            </li>
-			            <li class="active">菜谱</li>
+			            <li class="active">商品</li>
 			        </ul>
 
 	        <div class="container-fluid">
@@ -162,34 +171,41 @@
 		            		</a>
 			            </div>
 		                <div class="well">
-		                    <ul class="thumbnails" style="width: 100%">
-			                     <div class="row-fluid" style="width: 100%"> 
+		                    <ul class="thumbnails" style="width: 100% ">
+			                     <!-- <div class="row-fluid" style="width: 100%"> --> 
 			                     	<tr th:each="entries,iterStat:${menulist}" >
-			                     		<li class="span3" style="width: 220px">
-				                            <div class="thumbnail" style="width: 100%">
+			                     		<li  style="width: 220px;height:260px">
+				                            <div class="thumbnail" style="width: 100% ">
 					                            <div>
 					                             <img th:src="${entries.imgUrl}" width="230" height="170" />
 					                            </div>
 				                                <div>
-				                               	 	<i  style="width: 60px"> <td th:text="${entries['name']}"></td></i>
-				                                	<a class="btn btn-primary" >价格 :<td th:text="${entries['price']}"></td></a>
+				                                	<form id="findMenuPer" action="/zx/findMenuPer" method="post" class="btn btn-info" >       
+							                         	<button ><td th:text="${entries['name']}"/></button>
+											            <input hidden="test" name="id"  th:value="${entries['id']}" >
+											            <input hidden="test" name="userId"  th:value="${uesrMap.id}" >
+											    	</form>
+				                                	<a class="btn btn-primary" >价 格 :￥<td th:text="${entries['price']}"></td></a>
 				                                </div>
+				                                	
 				                                <div>
 				                                	<a th:if="${uesrMap.state =='0'}" >
-				                                	<form id="update" action="/zx/findUserList" method="post" class="btn btn-info" >       
-							                         	<button > <i class="icon-edit icon-white" ></i>修改</button>
-											            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
-											    	</form>
-					              					<button  onclick="del(this)" th:delid="${entries.id}"  th:userName="${uesrMap.name}"  th:userId="${uesrMap.id}" class="btn btn-danger" >
-					              						<i class="icon-trash icon-white" ></i> 删除
-					              						<input hidden="test" name="id"  th:value="${uesrMap.id}" >
-					              					</button>
+					                                	<form id="update" action="/zx/updateMenuHtml" method="post" class="btn btn-info" >       
+								                         	<button > <i class="icon-edit icon-white" ></i>修 改</button>
+								                         	<input hidden="test" name="id"  th:value="${entries.id}" >
+												            <input hidden="test" name="userId"  th:value="${uesrMap.id}" >
+											           		<input hidden="test" name="userName"  th:value="${uesrMap.name}" >
+											           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+												    	</form>
+						              					<button  onclick="del(this)" th:delid="${entries.id}"  th:userName="${uesrMap.name}"  th:userId="${uesrMap.id}" class="btn btn-danger" >
+						              						<i class="icon-trash icon-white" ></i> 删 除
+						              					</button>
 					              					</a>
 				                                </div>
 				                            </div>
 				                        </li>
 						            </tr>
-			                        </div>
+			                       <!--  </div> -->
 				              	 </ul>
 						       </div>
 						      <div class="pagination">

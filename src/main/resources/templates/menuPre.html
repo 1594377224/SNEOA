@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>系统后台</title>
+    
+
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+	<script src="/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/static/bootstrap/js/bootstrap.js"></script>
+   
+
+    <!-- Demo page code -->
+
+    <style type="text/css">
+    
+        #line-chart {
+            height:300px;
+            width:800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+        .brand { font-family: georgia, serif; }
+        .brand .first {
+            color: #ccc;
+            font-style: italic;
+        }
+        .brand .second {
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+	
+</head>
+<body>
+	 <div class="navbar">
+        <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    
+                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+                    <li id="fat-menu" class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        	<span th:text="${uesrMap.name}"></span>
+                           <!--  <i class="icon-user" ></i>
+                            <i class="icon-caret-down"></i> -->
+                        </a>
+                        
+                        <ul class="dropdown-menu">
+	                        <li>
+		                        <form id="user" action="/zx/findUserList" method="post">       
+		                         	<button> <a>个人中心</a></button>
+						            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+						        </form>
+                            </li>
+                            
+                            <!-- <li class="divider"></li> -->
+                            <li><a tabindex="-1" href="/zx/index">退出</a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+                <a class="brand" href="#"><span class="first">无线</span> <span class="second">后台</span></a>
+        </div>
+    </div>	 
+	
+	<div class="sidebar-nav">
+        <form class="search form-inline">
+            <input type="text" placeholder="Search...">
+        </form>
+
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>首页</a>
+	        <ul id="dashboard-menu" class="nav nav-list collapse in">
+	             <li>
+	            	<form id="user" action="/zx/findUserList" method="post">       
+                    	<button> <a>个人中心</a></button>
+			            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			        </form>
+				</li>
+	        </ul>
+
+        <!-- <a href="#table-menu" class="nav-header" data-toggle="collapse"><i class="icon-table"></i>主菜单</a>
+	        <ul id="table-menu" class="nav nav-list collapse">
+	            <li ><a href="/WirelessOrder/table.do?flag=table">主菜单管理</a></li>
+	        </ul> -->
+
+        <a href="#menu-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-reorder"></i>商品</a>
+	        <ul id="menu-menu" class="nav nav-list collapse">
+	        <li>
+	           <form id="menu" action="/zx/findMenuList" method="post">       
+	                		<button> <a>商品管理</a></button>
+			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
+			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+				</form>
+			</li>
+	        </ul>
+
+        <a href="#order-menu" class="nav-header" data-toggle="collapse"><i class="icon-th-large"></i>订单</a>
+	        <ul id="order-menu" class="nav nav-list collapse">
+	           <form id="order" action="/zx/findOrderList" method="post">       
+	                		<button> <a>订单管理</a></button>
+			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
+			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+			           		<input hidden="test" name="start"  th:value="0" >
+			           		<input hidden="test" name="limit"  th:value="8" >
+				</form>
+	        </ul>
+    </div>
+  <!-- 内容 开始 -->
+<div class="content">
+        <div id="myModal" class="modal hide fade">
+		  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			    <h3>温馨提示：</h3>
+		  </div>
+		  <div  class="modal-body">
+		    		<p>请选择尺寸和数量！</p>
+		  </div>
+		  <div class="modal-footer">
+					<a href="#" class="btn"  data-dismiss="modal" aria-hidden="true">关闭</a>
+		  </div>
+		</div>
+		
+		<div id="myModal1" class="modal hide fade">
+		  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			    <h3>温馨提示：</h3>
+		  </div>
+		  <div  class="modal-body">
+		    		<p>已经添加到我的订单！！</p>
+		  </div>
+		  <div class="modal-footer">
+					<a id="delbtn3"  href="#" class="btn btn-primary"> 确  认</a>
+		  </div>
+		</div>
+		
+        <div class="header">
+            <h1 class="page-title">商品</h1>
+        </div>
+        
+        <ul class="breadcrumb">
+            <li>
+	            <form id="user" action="/zx/indexUser" method="post">       
+                    <button> 主页</button>
+		            <input hidden="test" name="id"  th:value="${uesrMap.id}" >
+		            <input hidden="test" name="name"  th:value="${uesrMap.name}" >
+				</form>
+            </li>
+            <li class="active">商品</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+            <div class="page-header" ></div> 
+            <div class="row-fluid">
+            <div class="span1"></div>
+            	<div class="span5">
+					<!-- <h1>1</h1> -->
+					<img th:src="${menuPerMap.imgUrl}" alt="" width="280" height="240">	
+               </div>
+               <div class="span6">  
+				<h2>
+					<span class="label"> 名 称 : </span>
+					<td th:text="${menuPerMap.name}">
+				</h2>
+                 <h2>
+					<span class="label"> 价 格 : </span> 
+					<span class="label label-success" >￥ <td th:text="${menuPerMap.price}"></span>
+				 </h2>
+				 <h2>
+					<span class="label"> 备 注 : </span> 
+				 </h2>
+					<p class="text-success"><td th:text="${menuPerMap.remark}"></p>
+                 <ul class="check">
+                     <li class="chicun">尺寸：
+                         <button class="btn btn-default">S</button>　
+                         <button class="btn btn-default">M</button>　
+                         <button class="btn btn-default">L</button>　
+                         <button class="btn btn-default">XL</button>　
+                         <button class="btn btn-default">XXL</button>
+                    </li>
+                    <li>数量：
+                         <button class="btn btn-primary jian" >
+	                         <img src="/static/img/voice/jian.jpg">
+	                         <span class="glyphicon glyphicon-minus" aria-hidden="true">
+	                         </span>
+                         </button>
+                         <input class="num" type="text" value="0"/>
+                         <button class="btn btn-primary jia">
+	                         <img src="/static/img/voice/jia.jpg">
+	                         <span class="glyphicon glyphicon-plus" aria-hidden="true">
+	                         </span>
+                         </button>
+                     </li>
+                     <li>
+                        <button class="col-md-3 col-md-offset-1 btn btn-primary jiaru" 
+                        	th:userId="${uesrMap.id}"  th:userName="${uesrMap.name}"
+                        	th:productName="${menuPerMap.name}"  th:productPrice="${menuPerMap.price}"
+                        	th:productId="${menuPerMap.id}" th:state="${uesrMap.state}"
+                        	>
+                        	生成订单
+                        </button>
+                     </li>                
+                   </ul>
+					<script type="text/javascript">
+					
+				        $(function(){
+				             //选择尺寸
+				            var size = "";//尺寸
+				            var num = 0;//数量
+				            $(".chicun .btn").on("click",function(){
+				                 $(this).css("background","#eee");
+				                 $(this).siblings(".btn").css("background","#fff")
+				                 $(".num").val(0);
+				                 size = $(this).html();
+				                 return size;
+				             })
+				             //改变数量
+				             var i = $(".num").val();
+				             $(".jia").on("click",function(){
+				                 i++;
+				                 $(".num").val(i);
+				                 num = i; 
+				                 return num;
+				             })
+				             $(".jian").on("click",function(){
+				                 if(i>1){
+				                     i--;
+				                     $(".num").val(i);
+				                     num = i;
+				                 }
+				                 return num;
+				             })
+				             $(".jiaru").on("click",function(){
+				            	 /* alert("你好，我是一个警告框！");
+				            	 alert(size);
+				            	 alert(num); */
+				            	 var userId = $(".jiaru").attr("userId");
+				            	 var userName = $(".jiaru").attr("userName");
+				            	 var productId = $(".jiaru").attr("productId");
+				            	 var productName = $(".jiaru").attr("productName");
+				            	 var productPrice = $(".jiaru").attr("productPrice");
+				            	 var state = $(".jiaru").attr("state");
+				            	 var productPrices = productPrice*num;
+				            	 /* alert(productPrices); */
+				            	 var param = {};
+				            	 
+				                 if(size != "" && num != 0){
+					            	 param.size = size;
+					            	 param.num = num;
+					            	 param.userId = userId;
+					            	 param.userName = userName;
+					            	 param.productId = productId;
+					            	 param.productName = productName;
+					            	 param.productPrice = productPrice;
+					            	 param.productPrices = productPrices;
+					            	 param.state = state;
+				                	 $.ajax({
+				                	        url: "/zx/addOrder",
+				                	        data: JSON.stringify(param),
+				                	        //type、contentType必填,指明传参方式
+				                	        type: "POST",
+				                	        contentType: "application/json;charset=utf-8",
+				                	        success: function(response){
+				                	        //前端调用成功后，可以处理后端传回的json格式数据。
+				                	         var delurl = "/zx/findMenuList?id="+response.id+"&name="+response.name+"&state="+response.state; 
+						                	 $("#myModal1").modal("show").on("shown", function() {
+						                		 $("#delbtn3").attr('href', delurl);
+												}); 
+				                	    }
+				                	 });
+				                 }else{
+				                	 $("#myModal").modal("show").on("shown", function() {
+									}); 
+				                 }
+				             })
+				                 
+				             
+				        })
+					</script>
+               </div>
+               </div>
+               <div class="form-actions">
+					<form id="menu" action="/zx/findMenuList" method="post">       
+	                		<button> <a>返  回</a></button>
+			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
+			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+					</form>			
+				</div>
+			<footer>
+			<hr>
+			<p class="pull-right">
+				&copy; 2013.8 <a href="#" target="_blank"> shun_fzll</a>
+			</p>
+			</footer>
+            </div>
+        </div>
+    </div> 
+    
+    
+	
+</body>
+</html>

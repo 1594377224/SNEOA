@@ -77,16 +77,16 @@
 				</li>
 	        </ul>
 
-        <a href="#table-menu" class="nav-header" data-toggle="collapse"><i class="icon-table"></i>餐桌</a>
+        <!-- <a href="#table-menu" class="nav-header" data-toggle="collapse"><i class="icon-table"></i>主菜单</a>
 	        <ul id="table-menu" class="nav nav-list collapse">
-	            <li ><a href="/WirelessOrder/table.do?flag=table">餐桌管理</a></li>
-	        </ul>
+	            <li ><a href="/WirelessOrder/table.do?flag=table">主菜单管理</a></li>
+	        </ul> -->
 
-        <a href="#menu-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-reorder"></i>菜谱</a>
+        <a href="#menu-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-reorder"></i>商品</a>
 	        <ul id="menu-menu" class="nav nav-list collapse">
 	         <li>
 	            <form id="menu" action="/zx/findMenuList" method="post">       
-	                		<button> <a>菜谱管理</a></button>
+	                		<button> <a>商品管理</a></button>
 			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
 			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
 			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
@@ -96,7 +96,16 @@
 
         <a href="#order-menu" class="nav-header" data-toggle="collapse"><i class="icon-th-large"></i>订单</a>
 	        <ul id="order-menu" class="nav nav-list collapse">
-	            <li ><a href="/WirelessOrder/order.do?flag=order">订单管理</a></li>
+	            <li >
+	            	<form id="order" action="/zx/findOrderList" method="post">       
+	                		<button> <a>订单管理</a></button>
+			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
+			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
+			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+			           		<input hidden="test" name="start"  th:value="0" >
+			           		<input hidden="test" name="limit"  th:value="8" >
+					</form>
+	            </li>
 	        </ul>
     </div>
     
@@ -138,13 +147,13 @@
 					</div>
 					<div class="well">
 					    <ul class="nav nav-tabs">
-					      <li class="active"><a href="#home" data-toggle="tab">基本资料</a></li>
-					      <li><a href="#profile" data-toggle="tab">密码更改</a></li>
+					      <li class="active"><a href="#home" data-toggle="tab" id="showHidden">基本资料</a></li>
+					      <li><a href="#profile" data-toggle="tab" id="showHidden1">密码更改</a></li>
 					      <li th:if="${uesrMap.state == 0}">
-					      	<a href="#userAdd" data-toggle="tab">新增用户</a>
+					      	<a href="#userAdd" data-toggle="tab" id="showHidden2">新增用户</a>
 					      </li>
 					      <li th:if="${uesrMap.state == 0}">
-					      	<a href="#userList" data-toggle="tab">用户列表</a>
+					      	<a href="#userList" data-toggle="tab" id="showHidden3">用户列表</a>
 					      </li>
 					    </ul>
 					</div>
@@ -161,6 +170,7 @@
 					        <label>地址</label>
 					        <input name="address"  type="text" th:value="${uesrMap.address}" >
 			        	</div>
+			        	
   					</div>
   					</a>
 		   		 </form>
@@ -178,7 +188,7 @@
 			</a>
 			<footer>
 		             <hr>
-		             <p class="pull-right">&copy; 2013.8 <a href="#" > shun_fzll</a></p>
+		             <p class="pull-right">&copy; 2013.8 <a href="#" >  shun_fzll</a></p>
 		    </footer>
         	</div>
         	
@@ -223,7 +233,7 @@
 				 </form>
 				 <footer>
 		             <hr>
-		             <p class="pull-right">&copy; 2013.8 <a href="#" > 管理员操作</a></p>
+		             <p class="pull-right">&copy; 2013.8 <a href="#" > shun_fzll</a></p>
 		     	 </footer>
         	 </div>
         	 <a th:if="${uesrMap.state == 0}">
@@ -242,6 +252,7 @@
 										<th>管理员</th>
 										<th>创建时间</th>
 										<th>更新时间</th>
+										<th>操作</th>
 									</thead>
 									<tbody>
 										<tr th:each="user,userStat : ${userList}">
@@ -253,22 +264,67 @@
 													<td th:text="${user.state}">理员</td>
 													<td th:text="${user.crateTime}">创建时间</td>
 													<td th:text="${user.updateTime}">更新时间</td>
+													<td>
+														<form id="findMenuPer" action="/zx/delUser" method="post" class="btn btn-info" >       
+								                         	<button >删除</button>
+												            <input hidden="test" name="id"  th:value="${user.id}" >
+												    	</form>
+													</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-	        	 </div>
-	        	  <footer>
+					<footer>
 		             <hr>
-		             <p class="pull-right">&copy; 2013.8 <a href="#" > 管理员操作</a></p>
-		     	 </footer>
+		             <p class="pull-right">&copy; 2013.8 <a href="#" > shun_fzll</a></p>
+		     	 	</footer>
+	        	 </div>
         	 </a>
         	 </a>
         	 
     	</div>
 	</div>
+	<script type='text/javascript'>
+		
+		var sh = document.getElementById("showHidden");
+		var sh1 = document.getElementById("showHidden1");
+		var sh2 = document.getElementById("showHidden2");
+		var sh3 = document.getElementById("showHidden3");
+		sh.onclick = function() {
+		document.getElementById("myTabContent").style.display="";//显
+		document.getElementById("profile").style.display="none";//隐藏
+		document.getElementById("userAdd").style.display="none";//隐藏
+		document.getElementById("userList").style.display="none";//隐藏
+		return false;
+		
+		}
+		sh1.onclick = function() {
+			document.getElementById("profile").style.display="";//显
+			document.getElementById("myTabContent").style.display="none";//隐藏
+			document.getElementById("userAdd").style.display="none";//隐藏
+			document.getElementById("userList").style.display="none";//隐藏
+			return false;
+		
+		}
+		sh2.onclick = function() {
+			document.getElementById("userAdd").style.display="";//显
+			document.getElementById("myTabContent").style.display="none";//隐藏
+			document.getElementById("profile").style.display="none";//隐藏
+			document.getElementById("userList").style.display="none";//隐藏
+			return false;
+		
+		}
+		sh3.onclick = function() {
+			document.getElementById("userList").style.display="";//显
+			document.getElementById("myTabContent").style.display="none";//隐藏
+			document.getElementById("profile").style.display="none";//隐藏
+			document.getElementById("userAdd").style.display="none";//隐藏
+			return false;
+		
+		}
+		</script>
     <script type="text/javascript">
         $("[rel=tooltip]").tooltip();
         $(function() {

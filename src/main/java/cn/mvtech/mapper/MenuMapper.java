@@ -14,4 +14,10 @@ public interface MenuMapper {
 
 	int delMenu(int menuId);
 
+	Map<String, Object> findMenuMap(int menuId);
+
+	int updateMenu(Map<String, Object> paramMap);
+
+	int updateMenuById(Map<String, Object> paramMap);
+
 }

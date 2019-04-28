@@ -193,4 +193,10 @@ public class UserController {
 		return null;
 	}
 	
+	@RequestMapping("delUser")
+	public ModelAndView  delUser(@RequestParam("id") String id){
+		LOGGER.info("[删除用户信息]");
+		LOGGER.info("---id--->"+id);
+		return null;
+	}
 }

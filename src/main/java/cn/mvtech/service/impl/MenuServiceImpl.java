@@ -30,4 +30,22 @@ public class MenuServiceImpl implements MenuService{
 		// TODO Auto-generated method stub
 		return menuMapper.delMenu(menuId);
 	}
+
+	@Override
+	public Map<String, Object> findMenuMap(int menuId) {
+		// TODO Auto-generated method stub
+		return menuMapper.findMenuMap(menuId);
+	}
+
+	@Override
+	public int updateMenu(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return menuMapper.updateMenu(paramMap);
+	}
+
+	@Override
+	public int updateMenuById(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return menuMapper.updateMenuById(paramMap);
+	}
 }

@@ -134,28 +134,29 @@
 	        <div class="container-fluid">
 		            <div class="row-fluid">
 		            	 <div class="page-header" ></div>
-			            <form action="/zx/addMenu" method="post" class="form-horizontal"  enctype="multipart/form-data" >    
+			            <form action="/zx/updateMenu" method="post" class="form-horizontal"  enctype="multipart/form-data" >    
 				            <div class="row-fluid">
 				               <div class="span7">  	
 									<div class="control-group">
 											<label class="control-label" for="menuName">名 称*</label>
 											<div class="controls">
-												<input name="menuName" class="input-xlarge focused" id="menuName" type="text" value="">
+												<input name="menuName" class="input-xlarge focused" id="menuName" type="text" th:value="${menuPerMap.name}">
 											</div>
 									</div>
 									<div class="control-group">
 											<label class="control-label" for="price">价 格*</label>
 											<div class="controls">
-											<input name="price" class="input-xlarge focused" id="price" type="text" value="">
+											<input name="price" class="input-xlarge focused" id="price" type="text" th:value="${menuPerMap.price}">
 											</div>
 									</div>
 									<input id="id" type="hidden"  name="id"  th:value="${uesrMap.id}">
 									<input id="name" type="hidden"  name="name"  th:value="${uesrMap.name}" >
 									<input id="state" type="hidden"  name="state"  th:value="${uesrMap.state}" >
+									<input type="hidden" name="menuId" id="menuId"  th:value="${uesrMap.menuId}" >
 									<div class="control-group">
 											<label class="control-label" for="remark">备 注*</label>
 											<div class="controls">
-											<textarea rows="4" cols="20" name="remark" id="remark"></textarea>
+											<input rows="4" cols="20" name="remark" class="input-xlarge focused"  type="text" id="remark" th:value="${menuPerMap.remark}">
 											</div>
 									</div>
 									
@@ -163,7 +164,7 @@
 							   <div class="span5">
 									<div class="fileupload fileupload-new" data-provides="fileupload">
 					 					  <div class="fileupload-preview  thumbnail" style="width: 220px; height: 170px;">
-					 					
+					 						<img th:src="${menuPerMap.imgUrl}" width="230" height="170" />
 					 					  </div>
 										  <div>
 											  <span class="btn btn-file"><span class="fileupload-new">上传图片*</span><span class="fileupload-exists">更改</span>
@@ -176,10 +177,7 @@
 				                </div>
 				            </div>
 				            <div class="form-actions">
-								<button class="btn btn-primary">添 加</button>
-								<!-- <a href="/WirelessOrder/menu.do?flag=menu">
-									<button  class="btn">返 回</button>
-							 	</a> -->
+								<button class="btn btn-primary">修 改</button>
 							</div>
 			             </form>
 						<footer>
