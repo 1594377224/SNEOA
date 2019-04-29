@@ -7,6 +7,7 @@
 		<where>
 			isDel = 0
 		</where>
+		limit #{start},#{limit}
 	</select>
 	
 	<update id = "" parameterType = "Map">
@@ -73,6 +74,12 @@
 		where id = #{menuId}
 	</update>
 	
-	
+	<select id="findCountMenu"  resultType = "int">
+		select count(1)
+		from menu 
+		<where>
+			 isDel = 0
+		</where>
+	</select>
 	
 </mapper>

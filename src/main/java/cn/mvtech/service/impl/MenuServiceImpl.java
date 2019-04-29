@@ -14,12 +14,6 @@ public class MenuServiceImpl implements MenuService{
 	private MenuMapper menuMapper;
 
 	@Override
-	public List<Map<String, Object>> findMenuList() {
-		// TODO Auto-generated method stub
-		return menuMapper.findMenuList();
-	}
-
-	@Override
 	public int addMenu(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
 		return menuMapper.addMenu(paramMap);
@@ -47,5 +41,17 @@ public class MenuServiceImpl implements MenuService{
 	public int updateMenuById(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
 		return menuMapper.updateMenuById(paramMap);
+	}
+
+	@Override
+	public int findCountMenu() {
+		// TODO Auto-generated method stub
+		return menuMapper.findCountMenu();
+	}
+
+	@Override
+	public List<Map<String, Object>> findMenuList(Map<String, Object> uesrMap) {
+		// TODO Auto-generated method stub
+		return menuMapper.findMenuList(uesrMap);
 	}
 }

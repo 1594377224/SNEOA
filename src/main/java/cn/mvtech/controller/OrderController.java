@@ -66,11 +66,21 @@ public class OrderController {
 			orderList = orderuService.findOrderListAll(uesrMap);
 		} else {
 			count = orderuService.findCountOrderList(uesrMap);
+			String pre = "no";
+			String next = "no";
+			if (starts != 0) {
+				pre = "yes";
+			}
+			if (starts < count-8) {
+				next = "yes";
+			}
+			uesrMap.put("pre", pre);
+			uesrMap.put("next", next);
 			orderList = orderuService.findOrderList(uesrMap);
 		}
 		if(G4Utils.isNotEmpty(orderList)){
 			uesrMap.put("count", count);
-			LOGGER.info("uesrMap==="+uesrMap.toString());
+			LOGGER.info("uesrMap===>"+uesrMap.toString());
 			resultMap.put("resultCode", "0");
 	  		resultMap.put("resultMsg", "操作成功！！");
 		 	ModelAndView mv = new ModelAndView("/orderList");
@@ -81,6 +91,7 @@ public class OrderController {
 			return mv;
 		} else {
 			uesrMap.put("count", count);
+			LOGGER.info("uesrMap===》"+uesrMap.toString());
 			resultMap.put("resultCode", "-1");
 	  		resultMap.put("resultMsg", "没有订单！！");
 		 	ModelAndView mv = new ModelAndView("/orderList");
@@ -181,11 +192,21 @@ public class OrderController {
 				orderList = orderuService.findOrderListAll(uesrMap);
 			} else {
 				count = orderuService.findCountOrderList(uesrMap);
+				String pre = "no";
+				String next = "no";
+				if (starts != 0) {
+					pre = "yes";
+				}
+				if (starts < count-8) {
+					next = "yes";
+				}
+				uesrMap.put("pre", pre);
+				uesrMap.put("next", next);
 				orderList = orderuService.findOrderList(uesrMap);
 			}
 			if(G4Utils.isNotEmpty(orderList)){
 				uesrMap.put("count", count);
-				LOGGER.info("uesrMap==="+uesrMap.toString());
+				LOGGER.info("uesrMap===>"+uesrMap.toString());
 				resultMap.put("resultCode", "0");
 		  		resultMap.put("resultMsg", "操作成功！！");
 			 	ModelAndView mv = new ModelAndView("/orderList");
@@ -196,6 +217,7 @@ public class OrderController {
 				return mv;
 			} else {
 				uesrMap.put("count", count);
+				LOGGER.info("uesrMap===》"+uesrMap.toString());
 				resultMap.put("resultCode", "-1");
 		  		resultMap.put("resultMsg", "没有订单！！");
 			 	ModelAndView mv = new ModelAndView("/orderList");

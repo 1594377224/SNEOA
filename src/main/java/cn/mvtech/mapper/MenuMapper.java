@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MenuMapper {
 
-	List<Map<String, Object>> findMenuList();
-
 	int addMenu(Map<String, Object> paramMap);
 
 	int delMenu(int menuId);
@@ -19,5 +17,9 @@ public interface MenuMapper {
 	int updateMenu(Map<String, Object> paramMap);
 
 	int updateMenuById(Map<String, Object> paramMap);
+
+	int findCountMenu();
+
+	List<Map<String, Object>> findMenuList(Map<String, Object> uesrMap);
 
 }

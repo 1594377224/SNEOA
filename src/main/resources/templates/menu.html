@@ -93,6 +93,8 @@
 			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
 			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
 			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+			           		<input hidden="test" name="start"  th:value="0" >
+		           			<input hidden="test" name="limit"  th:value="10" >
 				</form>
 			</li>
 	        </ul>
@@ -106,7 +108,7 @@
 			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
 			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
 			           		<input hidden="test" name="start"  th:value="0" >
-			           		<input hidden="test" name="limit"  th:value="8" >
+			           		<input hidden="test" name="limit"  th:value="10" >
 					</form>
 				</li>
 	        </ul>
@@ -157,6 +159,8 @@
 						           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
 						           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
 						           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+						           		<input hidden="test" name="start"  th:value="0" >
+			           					<input hidden="test" name="limit"  th:value="10" >
 								</form>
 				                <!-- <div class="btn-group">
 				                </div> -->
@@ -207,12 +211,18 @@
 						            </tr>
 			                       <!--  </div> -->
 				              	 </ul>
+					              	 <div class="pagination" style="float:right">
+									    <ul>
+										    <tr th:if="${uesrMap.pre =='yes'}">
+										        <li><a th:href="@{/zx/findMenuList(id=${uesrMap.id},name=${uesrMap.name},state=${uesrMap.state},start=${uesrMap.start}-10,limit=10)}"> 前一页</a></li>
+										    </tr>
+										    <tr th:if="${uesrMap.next =='yes'}">
+										        <li><a th:href="@{/zx/findMenuList(id=${uesrMap.id},name=${uesrMap.name},state=${uesrMap.state},start=${uesrMap.start}+10,limit=10)}">后一页</a></li>
+										    </tr>
+									        <li><a th:text="共+${uesrMap.count}+条"> </a></li>
+									    </ul>
+									</div>	
 						       </div>
-						      <div class="pagination">
-								    <ul>
-								    	
-								    </ul>
-							</div>  
 							<footer>
 								<hr>
 								<p class="pull-right">

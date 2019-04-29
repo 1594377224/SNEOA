@@ -24,7 +24,6 @@ import cn.mvtech.service.MenuService;
 import cn.mvtech.service.UserService;
 import cn.mvtech.util.G4Utils;
 import cn.mvtech.util.Upload;
-import cn.mvtech.util.UploadPhoto;
 
 @RestController
 @RequestMapping("/zx")
@@ -38,7 +37,8 @@ public class MenuController {
 	private UserService userService;
 	
 	@RequestMapping("findMenuList")
-	public ModelAndView  findMenuList(@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("state") String state){
+	public ModelAndView  findMenuList(@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("state") String state
+			,@RequestParam("start") String start,@RequestParam("limit") String limit){
 		LOGGER.info("[查询主菜单信息]");
 		LOGGER.info("---id--->"+id);
 		LOGGER.info("---name--->"+name);
@@ -48,8 +48,31 @@ public class MenuController {
 		uesrMap.put("id", id);
 		uesrMap.put("name", name);
 		uesrMap.put("state", state);
-		List<Map<String,Object>> menulist = menuService.findMenuList();
+		if (G4Utils.isEmpty(start)) {
+			start = "0";
+		}
+		if (G4Utils.isEmpty(limit)) {
+			limit = "10";
+		}
+		int starts = Integer.parseInt(start);
+		int limits = Integer.parseInt(limit);
+		uesrMap.put("start", starts);
+		uesrMap.put("limit", limits);
+		int count = menuService.findCountMenu();
+		String pre = "no";
+		String next = "no";
+		if (starts != 0) {
+			pre = "yes";
+		}
+		if (starts < count-10) {
+			next = "yes";
+		}
+		uesrMap.put("pre", pre);
+		uesrMap.put("next", next);
+		uesrMap.put("count", count);
+		List<Map<String,Object>> menulist = menuService.findMenuList(uesrMap);
 		if(G4Utils.isNotEmpty(menulist)){
+			LOGGER.info("查询成功！！"+uesrMap);
 			resultMap.put("resultCode", "0");
       		resultMap.put("resultMsg", "操作成功！！");
       		resultMap.put("menuAdd", "off");
@@ -57,10 +80,11 @@ public class MenuController {
     	 	mv.addObject("resultMap", resultMap);
 		    mv.addObject("uesrMap", uesrMap);
 		    mv.addObject("menulist", menulist);
-		    LOGGER.info("操作成功-查询没数据！！");
+		    LOGGER.info("操作成功！！");
 			return mv;
 			
 		} else {
+			LOGGER.info("查询成功没数据！！"+uesrMap);
 			resultMap.put("resultCode", "0");
       		resultMap.put("resultMsg", "操作成功-查询没数据！！");
       		resultMap.put("menuAdd", "off");
@@ -117,7 +141,31 @@ public class MenuController {
 			uesrMap.put("id", id);
 			uesrMap.put("name", name);
 			uesrMap.put("state", state);
-			List<Map<String,Object>> menulist = menuService.findMenuList();
+			String start=null;
+			String limit=null;
+			if (G4Utils.isEmpty(start)) {
+				start = "0";
+			}
+			if (G4Utils.isEmpty(limit)) {
+				limit = "10";
+			}
+			int starts = Integer.parseInt(start);
+			int limits = Integer.parseInt(limit);
+			uesrMap.put("start", starts);
+			uesrMap.put("limit", limits);
+			int count = menuService.findCountMenu();
+			String pre = "no";
+			String next = "no";
+			if (starts != 0) {
+				pre = "yes";
+			}
+			if (starts < count-10) {
+				next = "yes";
+			}
+			uesrMap.put("pre", pre);
+			uesrMap.put("next", next);
+			uesrMap.put("count", count);
+			List<Map<String,Object>> menulist = menuService.findMenuList(uesrMap);
 			if(G4Utils.isNotEmpty(menulist)){
 				resultMap.put("resultCode", "0");
 				resultMap.put("menuAdd", "yes");
@@ -194,7 +242,31 @@ public class MenuController {
 		}
 		if(num > 0){
 			LOGGER.info("[添加菜单信息]---保存成功--->");
-			List<Map<String,Object>> menulist = menuService.findMenuList();
+			String start=null;
+			String limit=null;
+			if (G4Utils.isEmpty(start)) {
+				start = "0";
+			}
+			if (G4Utils.isEmpty(limit)) {
+				limit = "10";
+			}
+			int starts = Integer.parseInt(start);
+			int limits = Integer.parseInt(limit);
+			uesrMap.put("start", starts);
+			uesrMap.put("limit", limits);
+			int count = menuService.findCountMenu();
+			String pre = "no";
+			String next = "no";
+			if (starts != 0) {
+				pre = "yes";
+			}
+			if (starts < count-10) {
+				next = "yes";
+			}
+			uesrMap.put("pre", pre);
+			uesrMap.put("next", next);
+			uesrMap.put("count", count);
+			List<Map<String,Object>> menulist = menuService.findMenuList(uesrMap);
 			if(G4Utils.isNotEmpty(menulist)){
 				resultMap.put("resultCode", "0");
 				resultMap.put("menuAdd", "yes");
@@ -237,7 +309,31 @@ public class MenuController {
 			uesrMap.put("id", userId);
 			uesrMap.put("name", userName);
 			uesrMap.put("state", "0");
-			List<Map<String,Object>> menulist = menuService.findMenuList();
+			String start=null;
+			String limit=null;
+			if (G4Utils.isEmpty(start)) {
+				start = "0";
+			}
+			if (G4Utils.isEmpty(limit)) {
+				limit = "10";
+			}
+			int starts = Integer.parseInt(start);
+			int limits = Integer.parseInt(limit);
+			uesrMap.put("start", starts);
+			uesrMap.put("limit", limits);
+			int count = menuService.findCountMenu();
+			String pre = "no";
+			String next = "no";
+			if (starts != 0) {
+				pre = "yes";
+			}
+			if (starts < count-10) {
+				next = "yes";
+			}
+			uesrMap.put("pre", pre);
+			uesrMap.put("next", next);
+			uesrMap.put("count", count);
+			List<Map<String,Object>> menulist = menuService.findMenuList(uesrMap);
 			if(G4Utils.isNotEmpty(menulist)){
 				resultMap.put("resultCode", "0");
 				resultMap.put("menuAdd", "yes");
