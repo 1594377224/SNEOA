@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 public class FtpUtils {
 	
 	private static Logger LOGGER=(Logger) LoggerFactory.getLogger(FtpUtils.class);
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		FTPClient ftp=FtpUtils.getFTPClient("39.105.204.84", "root", "xuTONG@2018", 22);
 		LOGGER.info("-----------");
-	}
+	}*/
 	
     public static FTPClient getFTPClient(String ftpHost, String ftpUserName,
             String ftpPassword, int ftpPort) {

@@ -268,7 +268,7 @@
 				                	        contentType: "application/json;charset=utf-8",
 				                	        success: function(response){
 				                	        //前端调用成功后，可以处理后端传回的json格式数据。
-				                	         var delurl = "/zx/findMenuList?id="+response.id+"&name="+response.name+"&state="+response.state; 
+				                	         var delurl = "/zx/findMenuList?id="+response.id+"&name="+response.name+"&state="+response.state+"&start="+0+"&limit="+10; 
 						                	 $("#myModal1").modal("show").on("shown", function() {
 						                		 $("#delbtn3").attr('href', delurl);
 												}); 
@@ -291,6 +291,8 @@
 			           		<input hidden="test" name="id"  th:value="${uesrMap.id}" >
 			           		<input hidden="test" name="name"  th:value="${uesrMap.name}" >
 			           		<input hidden="test" name="state"  th:value="${uesrMap.state}" >
+			           		<input hidden="test" name="start"  th:value="0" >
+			           		<input hidden="test" name="limit"  th:value="10" >
 					</form>			
 				</div>
 			<footer>
