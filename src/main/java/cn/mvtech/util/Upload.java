@@ -17,7 +17,7 @@ public class Upload {
 		LOGGER.info("[把图片上传到本地目录]========>"+file.getSize());
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String basePath =  "D://img/";
-		String url =  "/static/img/";
+		String url =  "/static/";
 		String fileName = file.getOriginalFilename();
 		LOGGER.info("[+原图片名称+]==>"+fileName);
 		if(fileName!=null&&fileName!=""){   
