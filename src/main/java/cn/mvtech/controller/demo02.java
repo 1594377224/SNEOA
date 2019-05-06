@@ -1,15 +1,7 @@
 package cn.mvtech.controller;
 
-import java.text.ParseException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
-@Component
-@PropertySource(value = {"classpath:/param.properties","file:${user.dir}/config/param.properties"},ignoreResourceNotFound=true)
+//@Component
+//@PropertySource(value = {"classpath:/param.properties","file:${user.dir}/config/param.properties"},ignoreResourceNotFound=true)
 public class demo02 {
 	/*@Autowired
     private StringRedisTemplate template;
