@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>系统后台</title>
+	<title>HYHG网站</title>
     
 
     <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
@@ -31,7 +31,32 @@
             color: #fff;
             font-weight: bold;
         }
+      .time1{width:100%; height:50px;  line-height:50px; text-align:center;}
     </style>
+
+     <script language="javascript">
+		     var t = null;
+		    t = setTimeout(time,1000);//开始执行
+		    function time()
+		    {
+		       clearTimeout(t);//清除定时器
+		       dt = new Date();
+		var y=dt.getYear()+1900;
+		var mm=dt.getMonth()+1;
+		var d=dt.getDate();
+		var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+		var day=dt.getDay();
+		       	var h=dt.getHours();
+		       	var m=dt.getMinutes();
+		       	var s=dt.getSeconds();
+		if(h<10){h="0"+h;}
+		if(m<10){m="0"+m;}
+		if(s<10){s="0"+s;}
+		       	document.getElementById("timeShow").innerHTML =  y+"年"+mm+"月"+d+"日"+weekday[day]+" "+h+":"+m+":"+s+"";
+		       	t = setTimeout(time,1000); //设定定时器，循环执行           
+		    }
+	</script>
+
 	
 </head>
 <body>
@@ -39,7 +64,12 @@
         <div class="navbar-inner">
                 <ul class="nav pull-right">
                     
-                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+                   <li>  <a class="tools"><img class="iconTools" src="/static/voice/clock.png"></a> </li>
+                    <li class="hidden-phone visible-tablet visible-desktop">
+	                    <a class="tools">
+	                    	<div id="timeShow" class="tools"></div>
+	                    </a>
+                    </li>
                     <li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                         	<span th:text="${uesrMap.name}"></span>
@@ -61,7 +91,7 @@
                     </li>
                     
                 </ul>
-                <a class="brand" href="#"><span class="first">无线</span> <span class="second">后台</span></a>
+                <a class="brand" href="#"><span class="first">HYHG</span> <span class="second">网站</span></a>
         </div>
     </div>	 
 	
@@ -298,7 +328,7 @@
 			<footer>
 			<hr>
 			<p class="pull-right">
-				&copy; 2013.8 <a href="#" target="_blank"> shun_fzll</a>
+				&copy; 2013.8 <a href="#" target="_blank"> HYHG_1.0.0</a>
 			</p>
 			</footer>
             </div>
