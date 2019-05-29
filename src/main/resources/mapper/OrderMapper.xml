@@ -10,6 +10,7 @@
 			and userName = #{name}
 			and isDel = 0
 		</where>
+		ORDER BY crateTime DESC
 		limit #{start},#{limit}
 	</select>
 	
@@ -20,6 +21,7 @@
 		<where>
 			 isDel = 0
 		</where>
+		ORDER BY crateTime DESC
 		limit #{start},#{limit}
 	</select>
 	

@@ -193,9 +193,9 @@
 			  	  	<div id="myTabContent" class="tab-content">
 				      	<div class="tab-pane active in" id="home">
 				      		<input type="hidden" name="id" th:value="${uesrMap.id}">
-					        <label>用户id</label>
-					        <input name="userId" type="text" th:value="${uesrMap.userId}" >
 					        <label>用户名</label>
+					        <input name="userId" type="text" th:value="${uesrMap.userId}" >
+					        <label>用户id</label>
 					        <input name="name"  type="text" th:value="${uesrMap.name}" >
 					        <label>手机号</label>
 					        <input name="phone"  type="text" th:value="${uesrMap.phone}" >
@@ -229,13 +229,13 @@
 				    	<input id="id" type="hidden"  name="id"  th:value="${uesrMap.id}">
 						<input id="name" type="hidden"  name="name"  th:value="${uesrMap.name}" >
 						<div class="control-group">
-							<label class="control-label" for="price">用户名(中文)*</label>
+							<label class="control-label" for="price">用户名(英文)*</label>
 							<div class="controls">
 							<input name="addUserName" class="input-xlarge focused" id="addUserName" type="text" value="">
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label" for="price">用户名(英文)*</label>
+							<label class="control-label" for="price">用户名(中文)*</label>
 							<div class="controls">
 							<input name="addUserId" class="input-xlarge focused" id="addUserId" type="text" value="">
 							</div>
@@ -276,8 +276,8 @@
 							<div class="col-md-6">
 								<table class="table table-bordered">
 									<thead>
-										<th>用户名(英文)</th>
 										<th>用户名(中文)</th>
+										<th>用户名(英文)</th>
 										<th>密码</th>
 										<th>手机号</th>
 										<th>地址</th>
