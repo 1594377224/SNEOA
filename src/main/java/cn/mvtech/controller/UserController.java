@@ -66,19 +66,21 @@ public class UserController {
 		LOGGER.info("---address--->"+address);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> uesrMap = userService.findUserList(id);
 		paramMap.put("id", id);
 		paramMap.put("userId", userId);
 		paramMap.put("name", name);
 		paramMap.put("phone", phone);
 		paramMap.put("address", address);
+		paramMap.put("state", uesrMap.get("state").toString());
 		int num = userService.upUserById(paramMap);
 		if(num > 0){
-			resultMap.put("resultCode", "0");
+			resultMap.put("resultCode", "2");
      		resultMap.put("resultMsg", "操作成功！");
      		ModelAndView mv = new ModelAndView("/user");
 			mv.addObject("resultMap", resultMap);
 			mv.addObject("uesrMap", paramMap);
-			LOGGER.info("<----成功----->");
+			LOGGER.info("<----成功----->"+uesrMap);
 			return mv;
 		} else {
 			resultMap.put("resultCode", "-1");
@@ -105,7 +107,7 @@ public class UserController {
 			Map<String, Object> uesrMap = userService.findUserList(id);
 			LOGGER.info("uesrMap==>"+uesrMap);
 			if(G4Utils.isNotEmpty(uesrMap)){
-				resultMap.put("resultCode", "0");
+				resultMap.put("resultCode", "2");
 	      		resultMap.put("resultMsg", "操作成功！！");
 	    	 	ModelAndView mv = new ModelAndView("/user");
 			    mv.addObject("uesrMap", uesrMap);

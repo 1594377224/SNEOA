@@ -1,24 +1,28 @@
 package cn.mvtech.SNEOA;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.mvtech.util.G4Utils;
 
 public class test {
 	public static void main(String[] args) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("qq", "9");
-		paramMap.put("tenantId", "2001");
-		/*long a = G4Utils.isEmpty(paramMap.get("qq")) ? 1
-				: Long.parseLong((String) paramMap.get("qq"))+ 1L;
-		System.out.println(a);*/
-		System.out.println("------"+paramMap.toString());
-		Object tenantId = paramMap.get("tenantId");
-		System.out.println("++++"+tenantId);
-		if(G4Utils.isEmpty(tenantId)){
-			paramMap.put("tenantId", "");
-		}
-		System.out.println("======"+paramMap.toString());
+		/*Map map = new HashMap();
+		map.put("key1", "value1");
+		map.put("key2", "value2");
+		List<Map<String, String>> list1Map = new ArrayList<>();*/
+		List<Map<String, String>> listMap = new ArrayList<>();
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("campaignId", "10001");
+		paramMap.put("provinceId", "");
+		listMap.add(paramMap);
+		paramMap.put("campaignId", "10003");
+		paramMap.put("provinceId", "");
+		listMap.add(paramMap);
+
+		System.out.println(listMap.toString());
+		
 	}
 }
