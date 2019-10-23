@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/font-awesome.css">
 	<script src="/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="/static/bootstrap/js/bootstrap.js"></script>
-   
+   	<script src="/static/js/echarts.min.js"></script>
 
     <!-- Demo page code -->
 
@@ -198,68 +198,131 @@
 	
 				<div class="row-fluid">
 		    		<div class="block span6">
-		        		<a href="#tablewidget" class="block-heading" data-toggle="collapse">昨日</a>
+		        		<a href="#tablewidget" class="block-heading" data-toggle="collapse">今日</a>
 		        		<div id="tablewidget" class="block-body collapse in">
 						            <table class="table">
-						              <thead>
-						                <tr>
-						                  <th>经营支出</th>
-						                  <td>5000</td>
-						                </tr>
-						              </thead>
-						               <thead>
-						                <tr>
-						                  <th>经营收入</th>
-						                  <td>15000</td>
-						                </tr>
-						              </thead>
-						               <thead>
-						                <tr>
-						                  <th>接待人次</th>
-						                  <td>186</td>
-						                </tr>
-						              </thead>
-						               <thead>
-						                <tr>
-						                  <th>营业收入</th>
-						                  <td>10000</td>
-						                </tr>
-						              </thead>
+						             <div id="mainDate" style="width: 500px; height:400px;"></div>
+										 <script >
+										 $(document).ready(function (){
+											 var mainDate = echarts.init(document.getElementById('mainDate'));
+											    //显示加载动画
+											    mainDate.showLoading();
+											    $.ajax({
+											        type:"POST",
+											        cache:false,
+											        url:"/zx/rcbchart",
+											        data:{"scrq1": "1","scrq2": "1","dwmc": "1"},
+											        dataType: "json",
+											        success:function (result) {
+											            var valuedata = result.valuedata1;
+											            var categorydata = result.categorydata1;
+											            //隐藏加载动画
+											            mainDate.hideLoading();
+											            mainDate.setOption({
+											                //提示框组件
+											                tooltip: {
+											                    trigger: 'axis',
+											                    axisPointer: {
+											                        type: 'shadow'
+											                    }
+											                },
+											                //直角坐标系内绘图网格，left，right，bottom分别是距离容器左侧，右侧和底部的距离
+											                grid: {
+											                    left: '3%',
+											                    right: '4%',
+											                    bottom: '3%',
+											                    containLabel: true
+											                },
+											                //X轴
+											                xAxis: {
+											                    type: 'value',
+											                    boundaryGap: [0, 0.01]
+											                },
+											                //Y轴
+											                yAxis: {
+											                    type: 'category',
+											                    data: categorydata
+											                },
+											                series: [
+											                    {
+											                        name: result.dwmc,
+											                        type: 'bar',
+											                        data: valuedata
+											                    }
+											                ]
+											            })
+											        }
+											    })
+										 });
+										 </script>
+										
+										
 						            </table>
-				           			<p><a href="http://www.52itstyle.com">更多...</a></p>
+				           			<p><a href="http://www.baidu.com.com">更多...</a></p>
 				       	</div>
 				    </div>
 		  			<div class="block span6">
-		      		<a href="#tablewidget" class="block-heading" data-toggle="collapse">今日</a>
+		      		<a href="#tablewidget" class="block-heading" data-toggle="collapse">上月</a>
 		      		<div id="tablewidget" class="block-body collapse in">
-			            <table class="table">
-			              <thead>
-			                <tr>
-			                  <th>当前收入</th>
-			                  <td>8000</td>
-			                </tr>
-			              </thead>
-			              <thead>
-			                <tr>
-			                  <th>当前人次</th>
-			                  <td>45</td>
-			                </tr>
-			              </thead>
-			               
-			               <thead>
-			                <tr>
-			                  <th>待结账</th>
-			                  <td>25</td>
-			                </tr>
-			              </thead>
-			               <thead>
-			                <tr>
-			                  <th>待上菜</th>
-			                  <td>20</td>
-			                </tr>
-			              </thead>
-			            </table>
-			            <p><a href="http://www.52itstyle.com">更多...</a></p>
+			            	 <table class="table">
+						             <div id="main" style="width: 500px; height:400px;"></div>
+										 <script >
+										 $(document).ready(function (){
+											 var main = echarts.init(document.getElementById('main'));
+											    //显示加载动画
+											    main.showLoading();
+											    $.ajax({
+											        type:"POST",
+											        cache:false,
+											        url:"/zx/rcbchart",
+											        data:{"scrq1": "2","scrq2": "2","dwmc": "2"},
+											        dataType: "json",
+											        success:function (result) {
+											            var valuedata = result.valuedata2;
+											            var categorydata = result.categorydata2;
+											            //隐藏加载动画
+											            main.hideLoading();
+											            main.setOption({
+											                //提示框组件
+											                tooltip: {
+											                    trigger: 'axis',
+											                    axisPointer: {
+											                        type: 'shadow'
+											                    }
+											                },
+											                //直角坐标系内绘图网格，left，right，bottom分别是距离容器左侧，右侧和底部的距离
+											                grid: {
+											                    left: '3%',
+											                    right: '4%',
+											                    bottom: '3%',
+											                    containLabel: true
+											                },
+											                //X轴
+											                xAxis: {
+											                    type: 'value',
+											                    boundaryGap: [0, 0.01]
+											                },
+											                //Y轴
+											                yAxis: {
+											                    type: 'category',
+											                    data: categorydata
+											                },
+											                series: [
+											                    {
+											                        name: result.dwmc,
+											                        type: 'bar',
+											                        data: valuedata
+											                    }
+											                ]
+											            })
+											        }
+											    })
+										 });
+										 </script>
+										
+										
+						            </table>
+			            <p><a href="http://www.baidu.com">更多...</a></p>
 		        	</div>
 	  			</div>
 			   
@@ -269,66 +332,127 @@
 					    <div class="block span6">
 					        <a href="#tablewidget" class="block-heading" data-toggle="collapse">本月</a>
 					        <div id="tablewidget" class="block-body collapse in">
-					            <table class="table">
-					              <thead>
-					                <tr>
-					                  <th>营业收入</th>
-					                  <td>1500000</td>
-					                </tr>
-					              </thead>
-					               <thead>
-					                <tr>
-					                  <th>采购支出</th>
-					                  <td>150000</td>
-					                </tr>
-					              </thead>
-					               <thead>
-					                <tr>
-					                  <th>员工支出</th>
-					                  <td>500000</td>
-					                </tr>
-					              </thead>
-					               <thead>
-					                <tr>
-					                  <th>本月净利润</th>
-					                  <td>850000</td>
-					                </tr>
-					              </thead>
-					            </table>
-					            <p><a href="http://www.52itstyle.com">更多...</a></p>
+					          		 <table class="table">
+						             <div id="mainAll" style="width: 500px; height:400px;"></div>
+										 <script >
+										 $(document).ready(function (){
+											 var main = echarts.init(document.getElementById('mainAll'));
+											    //显示加载动画
+											    main.showLoading();
+											    $.ajax({
+											        type:"POST",
+											        cache:false,
+											        url:"/zx/rcbchart",
+											        data:{"scrq1": "3","scrq2": "3","dwmc": "3"},
+											        dataType: "json",
+											        success:function (result) {
+											            var valuedata = result.valuedata3;
+											            var categorydata = result.categorydata3;
+											            //隐藏加载动画
+											            main.hideLoading();
+											            main.setOption({
+											                //提示框组件
+											                tooltip: {
+											                    trigger: 'axis',
+											                    axisPointer: {
+											                        type: 'shadow'
+											                    }
+											                },
+											                //直角坐标系内绘图网格，left，right，bottom分别是距离容器左侧，右侧和底部的距离
+											                grid: {
+											                    left: '3%',
+											                    right: '4%',
+											                    bottom: '3%',
+											                    containLabel: true
+											                },
+											                //X轴
+											                xAxis: {
+											                    type: 'value',
+											                    boundaryGap: [0, 0.01]
+											                },
+											                //Y轴
+											                yAxis: {
+											                    type: 'category',
+											                    data: categorydata
+											                },
+											                series: [
+											                    {
+											                        name: result.dwmc,
+											                        type: 'bar',
+											                        data: valuedata
+											                    }
+											                ]
+											            })
+											        }
+											    })
+										 });
+										 </script>
+										
+										
+						            </table>
+					            <p><a href="http://www.baidu.com.com">更多...</a></p>
 					        </div>
 					    </div>
 					    <div class="block span6">
-					        <a href="#tablewidget" class="block-heading" data-toggle="collapse">人流量</a>
+					        <a href="#tablewidget" class="block-heading" data-toggle="collapse">全年</a>
 					        <div id="tablewidget" class="block-body collapse in">
-			            <table class="table">
-			              <thead>
-			                <tr>
-			                  <th>8::00~10:00</th>
-			                  <td>10.00%</td>
-			                </tr>
-			              </thead>
-			              <thead>
-			                <tr>
-			                  <th>10:00~14:00</th>
-			                  <td>25.00%</td>
-			                </tr>
-			              </thead>
-			               
-			               <thead>
-			                <tr>
-			                  <th>17:00~19:00</th>
-			                  <td>35.00%</td>
-			                </tr>
-			              </thead>
-			               <thead>
-			                <tr>
-			                  <th>19:00~24:00</th>
-			                  <td>30.00%</td>
-			                </tr>
-			              </thead>
-			            </table>
-			            <p><a href="http://www.52itstyle.com">更多...</a></p>
+			              		 <table class="table">
+						             <div id="mains" style="width: 500px; height:400px;"></div>
+										 <script >
+										 $(document).ready(function (){
+											 var main = echarts.init(document.getElementById('mains'));
+											    //显示加载动画
+											    main.showLoading();
+											    $.ajax({
+											        type:"POST",
+											        cache:false,
+											        url:"/zx/rcbchart",
+											        data:{"scrq1": "4","scrq2": "4","dwmc": "4"},
+											        dataType: "json",
+											        success:function (result) {
+											            var valuedata = result.valuedata4;
+											            var categorydata = result.categorydata4;
+											            //隐藏加载动画
+											            main.hideLoading();
+											            main.setOption({
+											                //提示框组件
+											                tooltip: {
+											                    trigger: 'axis',
+											                    axisPointer: {
+											                        type: 'shadow'
+											                    }
+											                },
+											                //直角坐标系内绘图网格，left，right，bottom分别是距离容器左侧，右侧和底部的距离
+											                grid: {
+											                    left: '3%',
+											                    right: '4%',
+											                    bottom: '3%',
+											                    containLabel: true
+											                },
+											                //X轴
+											                xAxis: {
+											                    type: 'value',
+											                    boundaryGap: [0, 0.01]
+											                },
+											                //Y轴
+											                yAxis: {
+											                    type: 'category',
+											                    data: categorydata
+											                },
+											                series: [
+											                    {
+											                        name: result.dwmc,
+											                        type: 'bar',
+											                        data: valuedata
+											                    }
+											                ]
+											            })
+											        }
+											    })
+										 });
+										 </script>
+						            </table>
+			            <p><a href="http://www.baidu.com.com">更多...</a></p>
 			       		 </div>
 			   			 </div>
 			   

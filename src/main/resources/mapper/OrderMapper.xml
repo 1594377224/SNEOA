@@ -71,4 +71,17 @@
 		</set>
 		where id = #{orderId}
 	</update>
+	
+	<select id="findAllProductorder"  parameterType="Map" resultType = "Map">
+		select productId,productName,num,crateTime ,SUM( IF( productName =productName, num, 0 ) ) AS totalPrice
+		from productorder
+		<where>
+			crateTime like CONCAT('%', #{data ,jdbcType=VARCHAR}, '%')
+			and  isDel = 0
+		</where>
+		GROUP BY productName
+	</select>
+	
+	
+	
 </mapper>

@@ -20,4 +20,6 @@ public interface OrderMapper {
 
 	int delOrderById(Map<String, Object> uesrMap);
 
+	List<Map<String, Object>> findAllProductorder(Map<String, Object> uesrMap);
+
 }

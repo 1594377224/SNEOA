@@ -42,5 +42,10 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderMapper.delOrderById(uesrMap);
 	}
+	@Override
+	public List<Map<String, Object>> findAllProductorder(Map<String, Object> uesrMap) {
+		// TODO Auto-generated method stub
+		return orderMapper.findAllProductorder(uesrMap);
+	}
 
 }

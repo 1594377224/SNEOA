@@ -1,5 +1,8 @@
 package cn.mvtech.controller;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,5 +233,106 @@ public class OrderController {
 		} else {
 			return null;
 		}
+	}
+	
+	@RequestMapping("rcbchart")
+    @ResponseBody
+    private JSONObject dwcb(@RequestParam("scrq1") String scrq1,@RequestParam("scrq2") String scrq2,
+                        @RequestParam("dwmc") String dwmc) throws ParseException {
+		LOGGER.info("[---------------1]scrq1:"+scrq1+"scrq2:"+scrq2+"dwmc:"+dwmc);
+		Calendar now = Calendar.getInstance(); 
+		int y = now.get(Calendar.YEAR);
+		int m = (now.get(Calendar.MONTH) + 1);
+		int d = now.get(Calendar.DAY_OF_MONTH);
+		String data = null;
+		LOGGER.info("年: " + y +"月: " +m+"日: " +d); 
+	 	List category1 = new ArrayList();     
+	 	List value1 = new ArrayList();    
+	 	List category2 = new ArrayList();     
+	 	List value2 = new ArrayList();  
+	 	List category3 = new ArrayList();     
+	 	List value3 = new ArrayList();  
+	 	List category4 = new ArrayList();     
+	 	List value4 = new ArrayList();  
+	 	Map<String, Object> uesrMap = new HashMap<String, Object>();
+	 	//今天
+		if("1".equals(dwmc)){
+			if(10==m||11==m||12==m){
+				data= y+"-"+m+"-"+d;
+			}else{
+				data= y+"-0"+m+"-"+d;
+			}
+			uesrMap.put("data", data);
+			LOGGER.info("data: "+data); 
+		 	List<Map<String,Object>> findAllOrderList = orderuService.findAllProductorder(uesrMap);
+		 	LOGGER.info("findAllOrderList: "+findAllOrderList.toString()); 
+		 	for (int i = 0; i < findAllOrderList.size(); i++) {
+		 		category1.add(findAllOrderList.get(i).get("productName"));
+		 		value1.add(findAllOrderList.get(i).get("totalPrice"));
+			}
+		}
+		//上月
+		if("2".equals(dwmc)){
+			if(m==1){
+				y=y-1;
+				m=12;
+			}else {
+				 m = m-1;
+			}
+			if(10==m||11==m||12==m){
+				data= y+"-"+m;
+			}else{
+				data= y+"-0"+m;
+			}
+			uesrMap.put("data", data);
+			LOGGER.info("data: "+data); 
+		 	List<Map<String,Object>> findAllOrderList = orderuService.findAllProductorder(uesrMap);
+		 	LOGGER.info("findAllOrderList: "+findAllOrderList.toString()); 
+		 	for (int i = 0; i < findAllOrderList.size(); i++) {
+		 		category2.add(findAllOrderList.get(i).get("productName"));
+		 		value2.add(findAllOrderList.get(i).get("totalPrice"));
+			}
+		}
+		//本月
+		if("3".equals(dwmc)){
+			if(10==m||11==m||12==m){
+				data= y+"-"+m;
+			}else{
+				data= y+"-0"+m;
+			}
+			uesrMap.put("data", data);
+			LOGGER.info("data: "+data); 
+		 	List<Map<String,Object>> findAllOrderList = orderuService.findAllProductorder(uesrMap);
+		 	LOGGER.info("findAllOrderList: "+findAllOrderList.toString()); 
+		 	for (int i = 0; i < findAllOrderList.size(); i++) {
+		 		category3.add(findAllOrderList.get(i).get("productName"));
+		 		value3.add(findAllOrderList.get(i).get("totalPrice"));
+			}
+		}
+		//今年
+		if("4".equals(dwmc)){
+			data= y+"";
+			uesrMap.put("data", data);
+			LOGGER.info("data: "+data); 
+		 	List<Map<String,Object>> findAllOrderList = orderuService.findAllProductorder(uesrMap);
+		 	LOGGER.info("findAllOrderList: "+findAllOrderList.toString()); 
+		 	for (int i = 0; i < findAllOrderList.size(); i++) {
+		 		category4.add(findAllOrderList.get(i).get("productName"));
+		 		value4.add(findAllOrderList.get(i).get("totalPrice"));
+			}
+		}
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("categorydata1",category1);
+        jsonObject.put("valuedata1",value1);
+        jsonObject.put("categorydata2",category2);
+        jsonObject.put("valuedata2",value2);
+        jsonObject.put("categorydata3",category3);
+        jsonObject.put("valuedata3",value3);
+        jsonObject.put("categorydata4",category4);
+        jsonObject.put("valuedata4",value4);
+        jsonObject.put("dwmc",dwmc);
+        JSONObject result = JSONObject.fromObject(jsonObject);
+        LOGGER.info("[---------------2]"+result);
+        return result;
 	}
 }
