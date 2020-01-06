@@ -243,10 +243,10 @@
 					              	 <div class="pagination" style="float:right">
 									    <ul>
 										    <tr th:if="${uesrMap.pre =='yes'}">
-										        <li><a th:href="@{/zx/findMenuList(id=${uesrMap.id},name=${uesrMap.name},state=${uesrMap.state},start=${uesrMap.start}-10,limit=10)}"> 前一页</a></li>
+										        <li><a th:href="@{/zx/findMenuList(id=${uesrMap.id},name=${uesrMap.name},state=${uesrMap.state},start=${uesrMap.start}-10,limit=10)}"> 上一页</a></li>
 										    </tr>
 										    <tr th:if="${uesrMap.next =='yes'}">
-										        <li><a th:href="@{/zx/findMenuList(id=${uesrMap.id},name=${uesrMap.name},state=${uesrMap.state},start=${uesrMap.start}+10,limit=10)}">后一页</a></li>
+										        <li><a th:href="@{/zx/findMenuList(id=${uesrMap.id},name=${uesrMap.name},state=${uesrMap.state},start=${uesrMap.start}+10,limit=10)}">下一页</a></li>
 										    </tr>
 									        <li><a th:text="共+${uesrMap.count}+条"> </a></li>
 									    </ul>
